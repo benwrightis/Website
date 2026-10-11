@@ -48,6 +48,21 @@
   nav.links { color: #fff; display: flex; gap: 26px; font-weight: 600; font-size: 0.95rem; }
   nav.links a { text-decoration: none; padding: 6px 0; border-bottom: 2px solid transparent; }
   nav.links a:hover { border-bottom-color: var(--kiwi); }
+
+  /* MOBILE MENU */
+  .menu-toggle { display: none; background: none; border: 2px solid var(--kiwi); color: #fff; border-radius: 10px; padding: 8px 12px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.95rem; cursor: pointer; align-items: center; gap: 8px; }
+  .menu-toggle .bars, .menu-toggle .bars::before, .menu-toggle .bars::after { display: block; width: 18px; height: 2px; background: #fff; border-radius: 2px; position: relative; }
+  .menu-toggle .bars::before, .menu-toggle .bars::after { content: ''; position: absolute; left: 0; }
+  .menu-toggle .bars::before { top: -6px; } .menu-toggle .bars::after { top: 6px; }
+  nav.links a.nav-book { display: none; }
+  @media (max-width: 760px) {
+    .nav-inner > a.btn { display: none; }
+    .menu-toggle { display: inline-flex; }
+    nav.links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: #003348; border-bottom: 3px solid var(--kiwi); padding: 8px 24px 18px 24px; box-shadow: 0 10px 24px rgba(0,0,0,0.25); }
+    nav.links.open { display: flex; }
+    nav.links a { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.15); font-size: 1.05rem; }
+    nav.links a.nav-book { display: inline-flex; margin-top: 16px; border: 2px solid var(--kiwi); background: var(--kiwi); color: var(--navy); justify-content: center; border-radius: 999px; padding: 10px 24px 12px 24px; }
+  }
   .btn {
     display: inline-flex; align-items: center; justify-content: center;
     background: var(--kiwi); color: var(--navy);
@@ -247,7 +262,6 @@
     .pillar-grid, .why-grid, .nest-grid { grid-template-columns: 1fr; }
     .gallery-strip { grid-template-columns: repeat(2, 1fr); }
     .env-photo-pair { grid-template-columns: 1fr; }
-    nav.links { display: none; }
   }
 </style>
 </head>
@@ -256,12 +270,14 @@
 <header class="site-nav">
   <div class="nav-inner">
     <img src="images/logo-reversed.png" alt="Karaka Learning Centre logo">
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false"><span class="bars"></span><span>Menu</span></button>
     <nav class="links">
       <a href="#philosophy">Philosophy</a>
       <a href="#environment">Environment</a>
       <a href="#nests">Nests</a>
       <a href="team.html">Team</a>
       <a href="#contact">Contact</a>
+      <a href="#contact" class="nav-book">Book a Visit</a>
     </nav>
     <a href="#contact" class="btn">Book a Visit</a>
   </div>
@@ -579,5 +595,13 @@
   </div>
 </footer>
 
+<script>
+  (function(){
+    var b=document.querySelector('.menu-toggle'), n=document.querySelector('nav.links');
+    if(!b||!n) return;
+    b.addEventListener('click',function(){ var o=n.classList.toggle('open'); b.setAttribute('aria-expanded',o); });
+    n.addEventListener('click',function(e){ if(e.target.tagName==='A'){ n.classList.remove('open'); b.setAttribute('aria-expanded','false'); } });
+  })();
+</script>
 </body>
 </html>
